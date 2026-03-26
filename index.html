@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Note Lantern</title>
+  <link rel="stylesheet" href="styles.css?v=studio-console-3">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-orbit hero-orbit-one"></div>
+      <div class="hero-orbit hero-orbit-two"></div>
+      <div class="hero-grid">
+        <div class="hero-copy-block">
+          <p class="eyebrow">Studio Console Theme Active</p>
+          <h1>See the song through a high-tech studio console.</h1>
+          <p class="hero-copy">
+            Drop in a track and explore its melody, chord motion, and fretboard shapes in a space that feels more like
+            an album sleeve than a spreadsheet. Built for practice, replay, and musical curiosity.
+          </p>
+          <div class="hero-actions">
+            <label class="upload-button" for="audioFile">Choose Audio</label>
+            <input id="audioFile" type="file" accept="audio/*">
+            <button id="analyzeButton" class="secondary-button" disabled>Analyze Song</button>
+          </div>
+          <p id="selectedFileLabel" class="muted-text">No audio selected yet.</p>
+        </div>
+
+        <aside class="hero-vignette">
+          <p class="vignette-kicker">Session Mood</p>
+          <div class="vignette-record">
+            <div class="record-ring record-ring-outer"></div>
+            <div class="record-ring record-ring-inner"></div>
+            <div class="record-label">NL</div>
+          </div>
+          <div class="vignette-copy">
+            <p class="vignette-title">From waveform to feel</p>
+            <p class="vignette-text">Notes for the line. Chords for the color. Tab for the hands.</p>
+          </div>
+          <div class="vignette-tags">
+            <span>melody</span>
+            <span>chords</span>
+            <span>guitar shapes</span>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="panel player-panel panel-feature">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Playback Deck</p>
+            <h2>Press play and stay inside the song</h2>
+          </div>
+          <span id="analysisBadge" class="status-pill idle">Waiting for audio</span>
+        </div>
+
+        <audio id="audioPlayer" controls></audio>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <p class="stat-label">Detected notes</p>
+            <p id="noteCount" class="stat-value">0</p>
+          </article>
+          <article class="stat-card">
+            <p class="stat-label">Tempo estimate</p>
+            <p id="tempoEstimate" class="stat-value">-</p>
+          </article>
+          <article class="stat-card">
+            <p class="stat-label">Melodic range</p>
+            <p id="rangeEstimate" class="stat-value">-</p>
+          </article>
+          <article class="stat-card">
+            <p class="stat-label">Song key</p>
+            <p id="keyEstimate" class="stat-value">-</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel timeline-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Song Path</p>
+            <h2>Watch the melody unfold in time</h2>
+          </div>
+        </div>
+        <div id="timelineEmptyState" class="empty-state">
+          Analyze a file to generate a note timeline.
+        </div>
+        <div id="timeline" class="timeline" aria-live="polite"></div>
+      </section>
+
+      <section class="panel notes-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Lead Line</p>
+            <h2>Slow the song down into playable moments</h2>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Note</th>
+                <th>Start</th>
+                <th>Duration</th>
+                <th>Pitch / Confidence</th>
+              </tr>
+            </thead>
+            <tbody id="notesTableBody">
+              <tr>
+                <td colspan="5" class="placeholder-cell">Detected notes will appear here after analysis.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel chords-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Harmony Wall</p>
+            <h2>Likely chord colors with guitar shapes</h2>
+          </div>
+        </div>
+        <p class="tab-note">
+          Chords are estimated from the song audio itself and shown with guitar-friendly fretboard diagrams.
+        </p>
+        <div id="chordsOutput" class="chords-grid">
+          <div class="empty-state">Analyze a file to generate likely chord changes.</div>
+        </div>
+      </section>
+
+      <section class="panel tablature-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Practice Sheet</p>
+            <h2>Quick tab for getting your hands moving</h2>
+          </div>
+        </div>
+        <p class="tab-note">
+          Best-effort tab mapping for standard tuning guitar. Works best for single-note melodies.
+        </p>
+        <pre id="tablatureOutput" class="tablature-output">Analyze a file to generate tablature.</pre>
+      </section>
+
+      <section class="panel limitations-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">Studio Notes</p>
+            <h2>What to trust, and what to double-check by ear</h2>
+          </div>
+        </div>
+        <ul class="limitations-list">
+          <li>Works best on monophonic passages where one main note is sounding at a time.</li>
+          <li>Dense chords, drums, and noisy mixes can confuse pitch tracking.</li>
+          <li>For exact sheet-music quality transcription, a later version should combine ML source separation and note-event modeling.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js?v=hybrid-analysis-9"></script>
+</body>
+</html>

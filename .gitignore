@@ -1,0 +1,5 @@
+analysis-output/
+backend/data/
+.venv/
+__pycache__/
+*.pyc
