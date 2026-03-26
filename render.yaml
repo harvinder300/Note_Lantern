@@ -6,8 +6,9 @@ services:
     buildCommand: pip install -r backend/requirements.txt
     startCommand: uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT
 
-  - type: static
+  - type: web
     name: note-lantern-web
+    runtime: static
     rootDir: .
     buildCommand: |
       printf "window.NOTE_LANTERN_API_BASE_URL = 'https://%s';\n" "$NOTE_LANTERN_API_HOST" > config.js
