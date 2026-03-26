@@ -12,7 +12,7 @@ const timelineEmptyState = document.getElementById("timelineEmptyState");
 const notesTableBody = document.getElementById("notesTableBody");
 const chordsOutput = document.getElementById("chordsOutput");
 const tablatureOutput = document.getElementById("tablatureOutput");
-const API_BASE_URL = "http://localhost:8001";
+const API_BASE_URL = window.NOTE_LANTERN_API_BASE_URL || "http://localhost:8001";
 
 let selectedFile = null;
 let objectUrl = null;

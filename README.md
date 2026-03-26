@@ -53,6 +53,32 @@ Then the API will be available at:
 http://localhost:8001
 ```
 
+## Deploy Publicly
+
+This project is now prepared for a simple Render deployment.
+
+Files added for deployment:
+
+- `config.js`
+  Runtime frontend API configuration
+- `render.yaml`
+  Blueprint for deploying:
+  - a public backend API
+  - a public static frontend
+
+### Render Deployment Steps
+
+1. Push the latest code to GitHub.
+2. Log in to Render.
+3. Create a new Blueprint deployment from this GitHub repo.
+4. Let Render create both services from `render.yaml`:
+   - `note-lantern-api`
+   - `note-lantern-web`
+5. Wait for deployment to finish.
+6. Open the static frontend URL from Render and test the app.
+
+The frontend will automatically use the deployed backend URL generated during the Render build.
+
 ## Current State
 
 This project is an evolving prototype. Tempo and key estimation are backend-driven, while some note and chord presentation still use hybrid logic to balance accuracy and responsiveness.
