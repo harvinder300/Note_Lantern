@@ -1,78 +1,76 @@
 # Note Lantern
 
-Note Lantern is moving from a browser-only prototype to a backend-driven music analysis application for guitar-focused practice.
+Note Lantern is a guitar-focused song analysis app for practice. It lets you upload audio and inspect:
 
-## Current repo state
+- detected notes over time
+- likely chord changes with guitar shapes
+- quick tablature
+- tempo and song key estimates
+
+## What It Does
+
+- Frontend interface for uploading and analyzing songs
+- Playback deck with synchronized note timeline
+- Chord cards with movable/barre-style guitar diagrams
+- Backend-assisted tempo and key detection
+- Hybrid analysis flow:
+  - backend is preferred for tempo, key, and stronger harmonic context
+  - browser analysis is still used for parts of note/chord display where it currently behaves better
+
+## Project Structure
 
 - `index.html`, `styles.css`, `app.js`
-  The original frontend MVP and UI experiments
+  Frontend UI and browser-side analysis logic
 - `backend/`
-  New FastAPI scaffold for the future deep-analysis pipeline
+  FastAPI backend, analysis schemas, and signal-processing pipeline
 - `docs/implementation-plan.md`
-  Architecture and phased roadmap for accurate notes/chords/tab
+  Roadmap for improving transcription accuracy
 
-## Why the shift
+## Run Locally
 
-The browser-only analyzer is not strong enough for reliable transcription from full songs. Accurate note and chord detection needs:
+### Frontend
 
-- source separation
-- stronger pitch/note transcription
-- harmonic analysis
-- guitar-specific fingering and chord-shape logic
+```powershell
+.\start-local.ps1
+```
 
-## New direction
+Then open:
 
-The intended system is:
+```text
+http://localhost:8000
+```
 
-1. Frontend uploads audio to the backend.
-2. Backend runs deep audio analysis.
-3. Backend returns structured notes, chords, tab positions, and chord diagrams.
-4. Frontend renders synchronized practice views.
-
-## Backend scaffold
-
-The backend currently includes:
-
-- `backend/app/main.py`
-- `backend/app/schemas.py`
-- `backend/app/services/pipeline.py`
-- `backend/requirements.txt`
-- `backend/server.py`
-
-The FastAPI files remain as the long-term target structure, and `backend/server.py` is the dependency-free backend we can run right now on Python 3.14.
-
-## Planning docs
-
-- [Implementation plan](/workspace/docs/implementation-plan.md)
-- [Backend README](/workspace/backend/README.md)
-
-## Frontend run
-
-1. Open PowerShell in this folder.
-2. Run `.\start-local.ps1`
-3. Open `http://localhost:8000`
-
-## Backend run
-
-Recommended for the real backend stack:
-
-1. Install Python 3.12
-2. Run `.\setup-backend-env.ps1`
-3. Run `.\start-backend.ps1`
-4. API will be available at `http://localhost:8001`
-
-## Current behavior
-
-- The frontend now tries the backend `/analyze` endpoint first.
-- The current backend performs real file ingestion and WAV preprocessing.
-- If the backend is not running yet, or if it returns no note/chord events yet, the frontend falls back to the older browser-side analyzer.
-
-## Python version note
-
-- Python 3.14 is available on this machine, but the real backend dependency stack is better supported on Python 3.11/3.12.
-- The repo is now prepared to use a project-local `.venv` with Python 3.12.
+### Backend
 
 ```powershell
 .\setup-backend-env.ps1
 .\start-backend.ps1
 ```
+
+Then the API will be available at:
+
+```text
+http://localhost:8001
+```
+
+## Current State
+
+This project is an evolving prototype. Tempo and key estimation are backend-driven, while some note and chord presentation still use hybrid logic to balance accuracy and responsiveness.
+
+For full-song transcription, the long-term direction is still:
+
+- better source separation
+- stronger melody transcription
+- stronger harmonic analysis
+- more reliable guitar-aware note/chord mapping
+
+## Important Notes
+
+- Full commercial-song transcription is still imperfect.
+- Chord and key detection should be reviewed by ear.
+- The backend works best when its local Python environment is set up correctly.
+
+## Docs
+
+- `docs/implementation-plan.md`
+- `backend/README.md`
